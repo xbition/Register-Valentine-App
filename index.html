@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+    .container h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      letter-spacing: 1px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      background: #f0f0f0;
+      color: #333;
+    }
+    .form-group input:focus {
+      border: 2px solid #2575fc;
+    }
+    .button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #2575fc;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .button:hover {
+      background: #6a11cb;
+    }
+    .error {
+      color: #ff4b4b;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    .success-message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 16px;
+      color: #28a745;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Регистрация</h1>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="username">Имя пользователя</label>
+        <input type="text" id="username" name="username" required>
+        <div id="usernameError" class="error"></div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <div id="emailError" class="error"></div>
+      </div>
+      <div class="form-group">
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password" required>
+        <div id="passwordError" class="error"></div>
+      </div>
+      <button type="submit" class="button">Зарегистрироваться</button>
+    </form>
+    <div id="successMessage" class="success-message"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const usernameError = document.getElementById('usernameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Сброс сообщений об ошибках
+      usernameError.textContent = '';
+      emailError.textContent = '';
+      passwordError.textContent = '';
+      successMessage.textContent = '';
+
+      let isValid = true;
+
+      // Проверка имени пользователя
+      if (username.value.trim() === '') {
+        usernameError.textContent = 'Введите имя пользователя.';
+        isValid = false;
+      }
+
+      // Проверка email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.value)) {
+        emailError.textContent = 'Введите корректный email.';
+        isValid = false;
+      }
+
+      // Проверка пароля
+      if (password.value.length < 6) {
+        passwordError.textContent = 'Пароль должен быть не менее 6 символов.';
+        isValid = false;
+      }
+
+      // Если все данные валидны
+      if (isValid) {
+        successMessage.textContent = 'Регистрация прошла успешно!';
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>
